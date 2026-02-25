@@ -37,7 +37,6 @@ export const followUnfollowUser = async (req, res) => {
       //unfollow the user
       await User.findByIdAndUpdate(id, { $pull: { followers: req.user._id } });
       await User.findByIdAndUpdate(req.user._id, { $pull: { following: id } });
-      //TODO: return the id of the user as a response.
 
       res.status(200).json({ message: "User unfollowed successfully" });
     } else {
@@ -51,8 +50,6 @@ export const followUnfollowUser = async (req, res) => {
         to: userToModify._id,
       });
       await newNotification.save();
-
-      //TODO: return the id of the user as a response.
 
       res.status(200).json({ message: "User followed successfully" });
     }
@@ -78,7 +75,7 @@ export const getSuggestedUsers = async (req, res) => {
     ]);
 
     const filteredUsers = users.filter(
-      (user) => !usersFollowedByMe.following.includes(user._id)
+      (user) => !usersFollowedByMe.following.includes(user._id),
     );
     const suggestedUsers = filteredUsers.slice(0, 4);
 
@@ -127,7 +124,7 @@ export const updateUser = async (req, res) => {
     if (profileImg) {
       if (user.profileImg) {
         await cloudinary.uploader.destroy(
-          user.profileImg.split("/").pop().split(".")[0]
+          user.profileImg.split("/").pop().split(".")[0],
         );
       }
 
@@ -137,7 +134,7 @@ export const updateUser = async (req, res) => {
     if (coverImg) {
       if (user.coverImg) {
         await cloudinary.uploader.destroy(
-          user.coverImg.split("/").pop().split(".")[0]
+          user.coverImg.split("/").pop().split(".")[0],
         );
       }
       const uploadedResponse = await cloudinary.uploader.upload(coverImg);
