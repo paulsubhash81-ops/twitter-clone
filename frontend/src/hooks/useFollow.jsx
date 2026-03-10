@@ -1,5 +1,5 @@
-import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 const useFollow = () => {
   const queryClient = useQueryClient();
@@ -12,11 +12,10 @@ const useFollow = () => {
         });
 
         const data = await res.json();
-
         if (!res.ok) {
-          throw new Error(data.error || "Something went wrong");
+          throw new Error(data.error || "Something went wrong!");
         }
-        return data;
+        return;
       } catch (error) {
         throw new Error(error.message);
       }
@@ -31,6 +30,7 @@ const useFollow = () => {
       toast.error(error.message);
     },
   });
+
   return { follow, isPending };
 };
 
